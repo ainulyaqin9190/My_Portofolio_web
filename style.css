@@ -1,0 +1,664 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+
+/* --- VARIABEL TEMA WARNA (Deep Dark & Mint Accent) --- */
+:root {
+    --bg: #0a192f;      /* Biru/Hitam Sangat Gelap untuk Latar Belakang */
+    --text: #ccd6f6;    /* Teks Putih Pucat */
+    --card: #112240;    /* Kartu Biru Gelap yang menonjol */
+    --accent: #64ffda;  /* Hijau Mint/Neon yang cerah (seperti di contoh) */
+    --link-hover: #8892b0; /* Teks hover sekunder */
+    --shadow: rgba(100, 255, 218, 0.2); /* Bayangan Aksen */
+}
+
+/* --- PENGATURAN UMUM --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Quicksand", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background-color 0.5s, color 0.5s; 
+    scroll-behavior: smooth; 
+    /* SOLUSI FULL PAGE SCROLL: Menghilangkan scroll bar */
+    overflow-x: hidden;
+    overflow-y: hidden; 
+}
+
+/* --- SECTION / KONTEN (FULL PAGE FOCUS) --- */
+.section {
+    padding: 8rem 10%;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    transition: background-color 0.5s;
+    background-image: radial-gradient(var(--card) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: var(--bg);
+    text-align: center;
+}
+
+/* ... (Section Home, About, Certifications, Community tetap sama) ... */
+
+
+/* --- CONTACT SECTION (Rombak untuk Footer) --- */
+.section.contact {
+    /* FIX UTAMA: Menjadikan Contact sebagai Flex Column untuk memaksa Footer ke bawah */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Menyebar ruang ke tengah */
+    align-items: center;
+    padding-bottom: 0; /* Penting: Hapus padding bawah agar footer menyentuh tepi */
+    min-height: 100vh;
+}
+
+.contact-card {
+    background: var(--card); 
+    padding: 3rem;
+    width: 80%;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    /* Atur margin atas dan bawah, biarkan auto untuk centering horizontal */
+    margin: 2rem auto; 
+    /* Hapus margin-top: 2rem; lama */
+}
+
+/* --- NAVBAR (Logo Kiri, Nav Kanan, Minimalis) --- */
+.navbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 1rem 5%;
+    background: transparent; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+.logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent);
+    text-decoration: none;
+    position: relative;
+}
+.logo::after { content: ' />'; color: var(--accent); }
+.logo::before { content: '< '; color: var(--accent); }
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem; 
+}
+.nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+    transition: color 0.3s;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: var(--accent);
+}
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease-in-out;
+}
+.nav-links a.active::after {
+    width: 100%;
+}
+.theme-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--accent);
+    margin-left: 1.5rem;
+    transition: all 0.3s;
+}
+.theme-btn:hover {
+    background: rgba(100, 255, 218, 0.1);
+}
+.fa-sun { display: none; }
+.dark .fa-sun { display: none; }
+.dark .fa-moon { display: inline; }
+.menu-toggle {
+    display: none; 
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--accent);
+}
+
+/* --- HOME SECTION (Dua Kolom) --- */
+.home {
+    text-align: left;
+}
+.home-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centering */
+}
+.home-left {
+    flex: 1;
+    padding-right: 30px;
+}
+.enthusiast-tag {
+    color: var(--accent);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
+}
+.home-left h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+.home-left h1 span {
+    color: var(--accent);
+}
+.home-left p.quote {
+    color: var(--link-hover);
+    margin: 15px 0 25px 0;
+    font-style: italic;
+}
+.home-btns button {
+    margin-right: 10px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border: 1px solid var(--accent);
+    transition: all 0.3s;
+}
+.btn-primary:hover {
+    background: transparent;
+    color: var(--accent);
+}
+.btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    transition: all 0.3s;
+}
+.btn-secondary:hover {
+    background: var(--accent);
+    color: var(--bg);
+}
+.social-links-home {
+    margin-top: 30px;
+}
+.social-links-home a {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-right: 20px;
+    transition: color 0.3s;
+}
+.social-links-home a:hover {
+    color: var(--link-hover);
+}
+
+/* Dashboard Kanan */
+.home-right {
+    flex: 1;
+    max-width: 450px;
+    padding-left: 30px;
+}
+.security-dashboard {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: left;
+}
+.security-dashboard h2 {
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+.dashboard-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.security-score {
+    text-align: center;
+}
+.score-circle {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50%;
+    border: 5px solid var(--accent);
+    color: var(--accent);
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.threat-distribution h3 {
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    height: 80px;
+    gap: 8px;
+}
+.bar-chart span {
+    width: 15px;
+    transition: height 0.5s;
+    border-radius: 2px 2px 0 0;
+}
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+.activity-list li {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    padding-left: 15px;
+    position: relative;
+}
+.activity-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+.activity-list .critical::before { color: #FF5733; }
+.activity-list .warning::before { color: #FFC300; }
+.activity-list .info::before { color: var(--accent); }
+
+/* --- ABOUT SECTION (Dua Kartu) --- */
+.about-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
+    margin: 30px auto 0 auto; /* Centering */
+}
+.about-card, .about-timeline {
+    background: var(--card);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow);
+    flex: 1;
+    text-align: left;
+}
+.about-card h3, .about-timeline h3 {
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+.about-card p {
+    color: var(--link-hover);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.stats-grid div {
+    text-align: center;
+}
+.stats-grid span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent);
+}
+.stats-grid p {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin: 0;
+}
+.timeline-item {
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 2px solid var(--accent);
+    position: relative;
+}
+.timeline-item::before {
+    content: '•';
+    position: absolute;
+    left: -8px;
+    top: 0;
+    color: var(--accent);
+    font-size: 1.2rem;
+    line-height: 1;
+}
+.timeline-title {
+    font-weight: bold;
+    color: var(--text);
+    display: block;
+}
+.timeline-company {
+    color: var(--link-hover);
+    font-size: 0.9rem;
+    display: block;
+}
+
+/* --- CERTIFICATIONS SECTION (Grid Kartu) --- */
+.cert-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 0 auto; /* Centering */
+}
+.cert-card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+    position: relative;
+}
+.cert-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(100, 255, 218, 0.4);
+}
+.cert-card h3 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+.cert-card p {
+    font-size: 0.9rem;
+    color: var(--link-hover);
+    margin-bottom: 15px;
+}
+.cert-status {
+    background: var(--accent);
+    color: var(--bg);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* --- COMMUNITY SECTION --- */
+.community-card {
+    background: var(--card);
+    padding: 40px;
+    width: 80%;
+    max-width: 1000px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: left;
+    margin: 2rem auto 0 auto; /* Centering */
+}
+.community-grid {
+    display: grid;
+    /* FIX: Layout 2 kolom (Founder 1.5fr, Staff 1fr) */
+    grid-template-columns: 1.5fr 1fr; 
+    gap: 40px;
+    padding: 10px;
+}
+.community-item {
+    padding-right: 20px;
+}
+.community-item i {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+.community-item h3 {
+    font-size: 1.3rem;
+    color: var(--text);
+    margin-bottom: 10px;
+}
+.community-item p {
+    color: var(--link-hover);
+    line-height: 1.5;
+    margin-bottom: 5px;
+}
+.community-item.founder {
+    grid-column: 1 / 2;
+    grid-row: auto; 
+    border-right: 1px solid var(--link-hover);
+    padding-right: 30px;
+}
+.community-item.staff {
+    grid-column: 2 / 3; 
+    grid-row: auto; 
+    padding-left: 10px;
+}
+/* Gaya untuk daftar member (2 kolom rapi di dalam kolom Staff) */
+.member-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px 10px; 
+    margin-top: 15px;
+}
+.member-list p {
+    color: var(--link-hover);
+    font-size: 0.95rem;
+    padding-left: 20px; 
+    position: relative;
+    margin: 0;
+    text-align: left; /* Rata kiri */
+}
+.member-list p::before {
+    content: ''; 
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+/* Menghapus gaya lama yang salah:
+.community-item.staff { ... grid-column: 3 / 4; }
+.community-item.bug-hunter { ... }
+.community-item.staff p { ... }
+*/
+
+/* --- CONTACT SECTION (Screenshot 4) --- */
+.contact-card {
+    background: var(--card); 
+    padding: 3rem;
+    width: 80%;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow);
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 2rem auto 0 auto; /* Centering */
+}
+
+.contact-left h3, .contact-right h3 {
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.contact-left p {
+    margin: 10px 0;
+    color: var(--link-hover);
+}
+.contact-left i {
+    color: var(--accent);
+    margin-right: 10px;
+    width: 20px;
+}
+.contact-right .quote-contact {
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 5px;
+}
+.contact-right .subtitle {
+    font-size: 0.9rem;
+    color: var(--link-hover);
+    margin-bottom: 20px;
+}
+.contact-right .btn-primary {
+    padding: 12px 30px;
+    font-size: 1rem;
+}
+
+/* --- FOOTER --- */
+footer {
+    padding: 1rem 5%;
+    text-align: center;
+    background: transparent;
+    color: var(--link-hover);
+    width: 100%;
+    /* FIX: Hapus position absolute agar footer mengalir dengan konten Contact */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Membantu mendorong footer ke bawah section */
+}
+.logo-footer {
+    font-size: 0.9rem;
+    color: var(--accent);
+}
+footer p {
+    font-size: 0.8rem;
+    margin: 0;
+}
+.social-links-footer a {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-left: 15px;
+}
+
+
+/* --- MEDIA QUERIES (RESPONSIVE) --- */
+@media (max-width: 1200px) {
+    .cert-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .home-layout {
+        flex-direction: column;
+    }
+    .home-left, .home-right {
+        padding: 0;
+        text-align: center;
+        width: 100%;
+    }
+    .home-right {
+        margin-top: 30px;
+        max-width: none;
+    }
+    .about-layout {
+        flex-direction: column;
+    }
+    .about-card, .about-timeline {
+        margin-bottom: 20px;
+    }
+    .cert-container {
+        grid-template-columns: 1fr;
+    }
+    /* COMMUNITY MOBILE FIX */
+    .community-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .community-item.founder {
+        border-right: none;
+        border-bottom: 1px solid var(--link-hover);
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+    .community-item.staff {
+        padding-left: 0;
+    }
+    .member-list {
+        grid-template-columns: 1fr; /* 1 kolom di mobile untuk daftar member */
+    }
+    /* END COMMUNITY MOBILE FIX */
+    .contact-card {
+        flex-direction: column;
+        width: 90%;
+        text-align: center;
+    }
+    .contact-left, .contact-right {
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    .contact-left p {
+        justify-content: center;
+    }
+    .contact-left i {
+        margin-right: 5px;
+    }
+    footer {
+        flex-direction: column;
+    }
+    footer p, .logo-footer, .social-links-footer {
+        margin-bottom: 5px;
+    }
+}
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block; 
+    }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: fixed; 
+        top: 0;
+        right: 0;
+        width: 70%;
+        height: 100vh;
+        background: var(--card);
+        padding-top: 5rem;
+        z-index: 95;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+    .nav-links.active {
+        display: flex;
+        transform: translateX(0);
+    }
+}
