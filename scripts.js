@@ -1,74 +1,106 @@
 // scripts.js
-const themeToggleBtn = document.getElementById("themeToggle");
 const menuToggleBtn = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
+const navOverlay = document.getElementById("navOverlay");
+const navOverlayMenu = document.getElementById("navOverlayMenu");
 const sections = document.querySelectorAll("section");
 const navAnchors = document.querySelectorAll('.nav-links a');
+const overlayAnchors = document.querySelectorAll('.nav-overlay-menu a');
 
-// 1. Logika Theme Toggle
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener("click", () => {
-        const icon = themeToggleBtn.querySelector("i");
-        icon.classList.toggle("fa-sun");
-        icon.classList.toggle("fa-moon");
-    });
+// 1. Menu Toggle (Hamburger) — buka/tutup overlay
+function openMenu() {
+    navOverlay.classList.add("active");
+    const menuIcon = menuToggleBtn.querySelector("i");
+    menuIcon.classList.remove("fa-bars");
+    menuIcon.classList.add("fa-times");
 }
 
-// 2. Logika Menu Toggle (Hamburger)
-menuToggleBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+function closeMenu() {
+    navOverlay.classList.remove("active");
     const menuIcon = menuToggleBtn.querySelector("i");
-    menuIcon.classList.toggle("fa-bars");
-    menuIcon.classList.toggle("fa-times");
+    menuIcon.classList.remove("fa-times");
+    menuIcon.classList.add("fa-bars");
+}
+
+function toggleMenu(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (navOverlay.classList.contains("active")) {
+        closeMenu();
+    } else {
+        openMenu();
+    }
+}
+
+menuToggleBtn.addEventListener("touchstart", toggleMenu, { passive: false });
+menuToggleBtn.addEventListener("click", toggleMenu);
+
+// Klik area kosong overlay untuk menutup
+navOverlay.addEventListener("touchstart", function(e) {
+    if (e.target === navOverlay) { e.preventDefault(); closeMenu(); }
+}, { passive: false });
+navOverlay.addEventListener("click", function(e) {
+    if (e.target === navOverlay) closeMenu();
 });
 
-
-// 3. Block scroll manual (wheel, touch, keyboard) — navigasi hanya lewat klik
+// 2. Block scroll — hanya di desktop
 let isScrolling = false;
 
 function allowScrollTemporarily() {
     isScrolling = true;
     clearTimeout(window._scrollTimeout);
-    window._scrollTimeout = setTimeout(() => { isScrolling = false; }, 1000);
+    window._scrollTimeout = setTimeout(() => { isScrolling = false; }, 1200);
 }
 
-window.addEventListener("wheel", (e) => { if (!isScrolling) e.preventDefault(); }, { passive: false });
-window.addEventListener("touchmove", (e) => { if (!isScrolling) e.preventDefault(); }, { passive: false });
+window.addEventListener("wheel", (e) => {
+    if (!isScrolling) e.preventDefault();
+}, { passive: false });
+
+window.addEventListener("touchmove", (e) => {
+    if (window.innerWidth <= 768) return;
+    if (!isScrolling) e.preventDefault();
+}, { passive: false });
+
 window.addEventListener("keydown", (e) => {
     const blocked = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
     if (!isScrolling && blocked.includes(e.key)) e.preventDefault();
 });
 
-// 4. Fungsi Scroll To Section (Perpindahan Halaman Penuh)
+// 3. Scroll To Section
 function scrollToSection(id) {
     allowScrollTemporarily();
     document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-
-    // Tutup menu mobile setelah mengklik link
-    if (window.innerWidth <= 768 && navLinks.classList.contains("active")) {
-        navLinks.classList.remove("active");
-        const menuIcon = menuToggleBtn.querySelector("i");
-        menuIcon.classList.remove("fa-times");
-        menuIcon.classList.add("fa-bars");
-    }
+    closeMenu();
     updateActiveLink(id);
 }
 
-// 5. Update active link
+// 4. Update active link (desktop nav + overlay)
 function updateActiveLink(currentId) {
     navAnchors.forEach(a => {
         a.classList.remove("active");
-        if (a.getAttribute('href') === '#' + currentId) {
-            a.classList.add("active");
-        }
+        if (a.getAttribute('href') === '#' + currentId) a.classList.add("active");
+    });
+    overlayAnchors.forEach(a => {
+        a.classList.remove("active");
+        if (a.getAttribute('href') === '#' + currentId) a.classList.add("active");
     });
 }
 
-// Navigasi lewat klik nav link (href="#section")
+// 5. Desktop nav link clicks
 navAnchors.forEach(a => {
     a.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = a.getAttribute('href').substring(1);
-        scrollToSection(targetId);
+        scrollToSection(a.getAttribute('href').substring(1));
     });
+});
+
+// 6. Overlay nav link clicks (mobile)
+overlayAnchors.forEach(a => {
+    function handleTap(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollToSection(a.getAttribute('href').substring(1));
+    }
+    a.addEventListener("touchstart", handleTap, { passive: false });
+    a.addEventListener("click", handleTap);
 });

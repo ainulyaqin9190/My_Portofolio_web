@@ -17,12 +17,15 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Quicksand", sans-serif;
     background: var(--bg);
     color: var(--text);
     transition: background-color 0.5s, color 0.5s;
-    scroll-behavior: smooth;
     overflow: hidden;
 }
 
@@ -55,12 +58,52 @@ html { scrollbar-width: none; }
 
 /* --- Blog Section --- */
 #blog {
-    min-height: 50vh;
+    min-height: 100vh;
 }
-#blog p {
-    color: var(--link-hover);
+.blog-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto 0 auto;
+}
+.blog-card {
+    background: var(--card);
+    padding: 30px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px var(--shadow);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(100, 255, 218, 0.4);
+}
+.blog-icon {
+    font-size: 2rem;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+.blog-card h3 {
     font-size: 1.1rem;
-    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+.blog-card p {
+    font-size: 0.9rem;
+    color: var(--link-hover);
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+.blog-tag {
+    background: rgba(100, 255, 218, 0.1);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border: 1px solid var(--accent);
 }
 
 /* --- CONTACT SECTION (Rombak untuk Footer) --- */
@@ -149,12 +192,77 @@ html { scrollbar-width: none; }
 .dark .fa-sun { display: none; }
 .dark .fa-moon { display: inline; }
 .menu-toggle {
-    display: none; 
+    display: none;
     background: transparent;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--accent);
+}
+
+/* --- NAV OVERLAY (Mobile Menu Sidebar) --- */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+}
+.nav-overlay.active {
+    display: block;
+}
+.nav-overlay-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65%;
+    max-width: 260px;
+    height: 100vh;
+    background: var(--card);
+    padding: 5rem 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    z-index: 145;
+    border-left: 1px solid rgba(100, 255, 218, 0.15);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.6);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.35s ease-in-out, visibility 0.35s;
+}
+.nav-overlay.active .nav-overlay-menu {
+    transform: translateX(0);
+    visibility: visible;
+}
+.nav-overlay-menu a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px 30px;
+    text-align: left;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.08);
+    transition: color 0.2s, background 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+.nav-overlay-menu a:last-child {
+    border-bottom: none;
+}
+.nav-overlay-menu a:hover,
+.nav-overlay-menu a.active {
+    color: var(--accent);
+    background: rgba(100, 255, 218, 0.05);
+    border-left: 3px solid var(--accent);
+}
+.nav-overlay-menu a:active {
+    background: rgba(100, 255, 218, 0.15);
 }
 
 /* --- HOME SECTION (Dua Kolom) --- */
@@ -474,28 +582,30 @@ html { scrollbar-width: none; }
 /* Gaya untuk daftar member (2 kolom rapi di dalam kolom Staff) */
 .member-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px 10px; 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 15px;
     margin-top: 15px;
 }
 .member-list p {
     color: var(--link-hover);
-    font-size: 0.95rem;
-    padding-left: 20px; 
+    font-size: 0.9rem;
+    padding-left: 18px;
     position: relative;
     margin: 0;
-    text-align: left; /* Rata kiri */
+    text-align: left;
+    white-space: nowrap;
 }
 .member-list p::before {
-    content: ''; 
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
     position: absolute;
     left: 0;
-    top: 0;
-    color: var(--accent);
-    font-size: 0.9rem;
+    top: 7px;
 }
+
 /* Menghapus gaya lama yang salah:
 .community-item.staff { ... grid-column: 3 / 4; }
 .community-item.bug-hunter { ... }
@@ -635,6 +745,10 @@ footer p {
     .cert-container {
         grid-template-columns: 1fr;
     }
+    .blog-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
     .community-card {
         width: 92%;
         padding: 25px;
@@ -677,36 +791,39 @@ footer p {
 
 /* === MOBILE (max 768px) === */
 @media (max-width: 768px) {
-    /* NAVBAR MOBILE */
-    .menu-toggle {
-        display: block;
-        z-index: 200;
+    body {
+        overflow-y: auto;
+        overflow-x: hidden;
     }
+
+    /* NAVBAR */
+    .navbar {
+        padding: 0.8rem 5%;
+    }
+    .logo {
+        font-size: 1rem;
+    }
+
+    /* Sembunyikan nav-links desktop, pakai overlay */
     .nav-links {
+        display: none;
+    }
+
+    /* HAMBURGER BUTTON */
+    .menu-toggle {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 1.5rem;
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 70%;
-        height: 100vh;
-        background: var(--card);
-        padding-top: 5rem;
-        z-index: 150;
-        transform: translateX(100%);
-        visibility: hidden;
-        transition: transform 0.4s ease-in-out, visibility 0.4s;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        z-index: 200;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        border-radius: 6px;
+        transition: background 0.3s;
     }
-    .nav-links.active {
-        transform: translateX(0);
-        visibility: visible;
-    }
-    .nav-links a {
-        font-size: 1.05rem;
-        padding: 8px 0;
+    .menu-toggle:active {
+        background: rgba(100, 255, 218, 0.15);
     }
 }
 
@@ -893,10 +1010,30 @@ footer p {
 
     /* BLOG */
     #blog {
-        min-height: 40vh;
+        min-height: 100vh;
     }
-    #blog p {
+    .blog-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .blog-card {
+        padding: 20px 15px;
+    }
+    .blog-icon {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    .blog-card h3 {
         font-size: 0.95rem;
+        margin-bottom: 6px;
+    }
+    .blog-card p {
+        font-size: 0.82rem;
+        margin-bottom: 10px;
+    }
+    .blog-tag {
+        font-size: 0.65rem;
     }
 
     /* COMMUNITY */

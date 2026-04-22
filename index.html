@@ -10,8 +10,8 @@
 <body class="dark"> 
 
 <header class="navbar">
-    <a href="#home" class="logo">RoomKangAinun</a> 
-    
+    <a href="#home" class="logo">RoomKangAinun</a>
+
     <nav class="nav-links" id="navLinks">
         <a href="#home">Home</a>
         <a href="#about">About</a>
@@ -20,11 +20,22 @@
         <a href="#community">Community</a>
         <a href="#contact">Contact</a>
     </nav>
-    
+
     <button id="menuToggle" class="menu-toggle" aria-label="Toggle Navigation">
         <i class="fas fa-bars"></i>
     </button>
 </header>
+
+<div class="nav-overlay" id="navOverlay">
+    <nav class="nav-overlay-menu" id="navOverlayMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#blog">Blog</a>
+        <a href="#community">Community</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</div>
 
 <section id="home" class="section home">
     <div class="home-layout">
@@ -82,7 +93,7 @@
     <div class="about-layout">
         <div class="about-card">
             <h3>My Introduction</h3>
-            <p>"A self-taught full-stack web de2veloper and cybersecurity beginner from Kediri, East Java, Indonesia.
+            <p>"A self-taught full-stack web developer and cybersecurity beginner from Kediri, East Java, Indonesia.
 I'm very particular about the experience, architecture, and code quality of the things I build and discover.
 I've learned a lot from the open source community. love how collaboration and knowledge sharing happen through open source."</p>
             <div class="stats-grid">
@@ -111,7 +122,29 @@ I've learned a lot from the open source community. love how collaboration and kn
     </div>
 </section>
 
-<section id="blog" class="section"><h2>Blog</h2><p>To Be Continue</p></section>
+<section id="blog" class="section">
+    <h2>Blog</h2>
+    <div class="blog-container">
+        <div class="blog-card">
+            <div class="blog-icon"><i class="fas fa-shield-halved"></i></div>
+            <h3>Cyber Security Tips</h3>
+            <p>Tips dan insight seputar keamanan siber, dari dasar hingga praktek nyata di dunia penetration testing.</p>
+            <span class="blog-tag">Coming Soon</span>
+        </div>
+        <div class="blog-card">
+            <div class="blog-icon"><i class="fas fa-code"></i></div>
+            <h3>Web Development</h3>
+            <p>Perjalanan belajar web development, dari HTML/CSS hingga full-stack project dan best practices.</p>
+            <span class="blog-tag">Coming Soon</span>
+        </div>
+        <div class="blog-card">
+            <div class="blog-icon"><i class="fas fa-flag-checkered"></i></div>
+            <h3>CTF Write-up</h3>
+            <p>Dokumentasi dan pembahasan challenge Capture The Flag yang pernah diselesaikan.</p>
+            <span class="blog-tag">Coming Soon</span>
+        </div>
+    </div>
+</section>
 
 <section id="community" class="section">
     <h2>Community</h2>
