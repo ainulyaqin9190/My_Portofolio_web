@@ -21,12 +21,14 @@ body {
     font-family: "Quicksand", sans-serif;
     background: var(--bg);
     color: var(--text);
-    transition: background-color 0.5s, color 0.5s; 
-    scroll-behavior: smooth; 
-    /* SOLUSI FULL PAGE SCROLL: Menghilangkan scroll bar */
-    overflow-x: hidden;
-    overflow-y: hidden; 
+    transition: background-color 0.5s, color 0.5s;
+    scroll-behavior: smooth;
+    overflow: hidden;
 }
+
+/* Sembunyikan scrollbar di semua browser */
+html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
+html { scrollbar-width: none; }
 
 /* --- SECTION / KONTEN (FULL PAGE FOCUS) --- */
 .section {
@@ -43,8 +45,23 @@ body {
     text-align: center;
 }
 
-/* ... (Section Home, About, Certifications, Community tetap sama) ... */
+/* --- Section Headings --- */
+.section > h2 {
+    color: var(--accent);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
 
+/* --- Blog Section --- */
+#blog {
+    min-height: 50vh;
+}
+#blog p {
+    color: var(--link-hover);
+    font-size: 1.1rem;
+    font-style: italic;
+}
 
 /* --- CONTACT SECTION (Rombak untuk Footer) --- */
 .section.contact {
@@ -57,30 +74,18 @@ body {
     min-height: 100vh;
 }
 
-.contact-card {
-    background: var(--card); 
-    padding: 3rem;
-    width: 80%;
-    max-width: 900px;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px var(--shadow);
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    /* Atur margin atas dan bawah, biarkan auto untuk centering horizontal */
-    margin: 2rem auto; 
-    /* Hapus margin-top: 2rem; lama */
-}
+/* duplikasi dihapus — .contact-card ada di bawah */
 
 /* --- NAVBAR (Logo Kiri, Nav Kanan, Minimalis) --- */
 .navbar {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
-    background: transparent; 
-    position: fixed; 
+    background: rgba(10, 25, 47, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -302,18 +307,21 @@ body {
 .activity-list .info::before { color: var(--accent); }
 
 /* --- ABOUT SECTION (Dua Kartu) --- */
+#about {
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+}
 .about-layout {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     width: 100%;
     max-width: 1200px;
-    margin-top: 30px;
-    margin: 30px auto 0 auto; /* Centering */
+    margin: 15px auto 0 auto;
 }
 .about-card, .about-timeline {
     background: var(--card);
-    padding: 30px;
+    padding: 25px;
     border-radius: 8px;
     box-shadow: 0 10px 30px var(--shadow);
     flex: 1;
@@ -321,34 +329,35 @@ body {
 }
 .about-card h3, .about-timeline h3 {
     color: var(--accent);
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
 }
 .about-card p {
     color: var(--link-hover);
-    margin-bottom: 30px;
-    line-height: 1.6;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 0.92rem;
 }
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
 }
 .stats-grid div {
     text-align: center;
 }
 .stats-grid span {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: var(--accent);
 }
 .stats-grid p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text);
     margin: 0;
 }
 .timeline-item {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     padding-left: 15px;
     border-left: 2px solid var(--accent);
     position: relative;
@@ -376,20 +385,19 @@ body {
 /* --- CERTIFICATIONS SECTION (Grid Kartu) --- */
 .cert-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: 100%;
     max-width: 1200px;
-    margin: 30px auto 0 auto; /* Centering */
+    margin: 30px auto 0 auto;
 }
 .cert-card {
     background: var(--card);
-    padding: 20px;
+    padding: 25px 20px;
     border-radius: 8px;
     box-shadow: 0 4px 15px var(--shadow);
     transition: transform 0.3s, box-shadow 0.3s;
     text-align: center;
-    position: relative;
 }
 .cert-card:hover {
     transform: translateY(-5px);
@@ -408,13 +416,12 @@ body {
 .cert-status {
     background: var(--accent);
     color: var(--bg);
-    padding: 3px 8px;
+    padding: 3px 10px;
     border-radius: 4px;
     font-size: 0.7rem;
     font-weight: bold;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+    display: inline-block;
+    margin-top: 10px;
 }
 
 /* --- COMMUNITY SECTION --- */
@@ -570,13 +577,19 @@ footer p {
 
 
 /* --- MEDIA QUERIES (RESPONSIVE) --- */
-@media (max-width: 1200px) {
-    .cert-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
 
+/* === TABLET (max 900px) === */
 @media (max-width: 900px) {
+    .section {
+        padding: 5rem 5%;
+    }
+    .section.contact {
+        padding: 5rem 5% 0 5%;
+    }
+    .section > h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
     .home-layout {
         flex-direction: column;
     }
@@ -585,80 +598,416 @@ footer p {
         text-align: center;
         width: 100%;
     }
+    .home-left h1 {
+        font-size: 2.5rem;
+    }
     .home-right {
-        margin-top: 30px;
-        max-width: none;
+        margin-top: 20px;
+        max-width: 100%;
+    }
+    .home-btns {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+    .social-links-home {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .score-circle {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 1.5rem;
+    }
+    .dashboard-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
     }
     .about-layout {
         flex-direction: column;
+        gap: 15px;
     }
     .about-card, .about-timeline {
-        margin-bottom: 20px;
+        margin-bottom: 0;
     }
     .cert-container {
         grid-template-columns: 1fr;
     }
-    /* COMMUNITY MOBILE FIX */
+    .community-card {
+        width: 92%;
+        padding: 25px;
+    }
     .community-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 20px;
     }
     .community-item.founder {
         border-right: none;
         border-bottom: 1px solid var(--link-hover);
         padding-right: 0;
-        padding-bottom: 20px;
+        padding-bottom: 15px;
     }
     .community-item.staff {
         padding-left: 0;
     }
     .member-list {
-        grid-template-columns: 1fr; /* 1 kolom di mobile untuk daftar member */
+        grid-template-columns: 1fr 1fr;
     }
-    /* END COMMUNITY MOBILE FIX */
     .contact-card {
         flex-direction: column;
-        width: 90%;
+        width: 92%;
         text-align: center;
+        padding: 2rem;
     }
     .contact-left, .contact-right {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         text-align: center;
-    }
-    .contact-left p {
-        justify-content: center;
-    }
-    .contact-left i {
-        margin-right: 5px;
+        width: 100%;
     }
     footer {
         flex-direction: column;
+        gap: 6px;
     }
     footer p, .logo-footer, .social-links-footer {
-        margin-bottom: 5px;
+        margin-bottom: 0;
     }
 }
+
+/* === MOBILE (max 768px) === */
 @media (max-width: 768px) {
+    /* NAVBAR MOBILE */
     .menu-toggle {
-        display: block; 
+        display: block;
+        z-index: 200;
     }
     .nav-links {
-        display: none;
+        display: flex;
         flex-direction: column;
-        position: fixed; 
+        align-items: center;
+        gap: 1.5rem;
+        position: fixed;
         top: 0;
         right: 0;
         width: 70%;
         height: 100vh;
         background: var(--card);
         padding-top: 5rem;
-        z-index: 95;
+        z-index: 150;
         transform: translateX(100%);
-        transition: transform 0.4s ease-in-out;
+        visibility: hidden;
+        transition: transform 0.4s ease-in-out, visibility 0.4s;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
     }
     .nav-links.active {
-        display: flex;
         transform: translateX(0);
+        visibility: visible;
+    }
+    .nav-links a {
+        font-size: 1.05rem;
+        padding: 8px 0;
+    }
+}
+
+/* === SMALL MOBILE 375px (max 480px) === */
+@media (max-width: 480px) {
+    /* GLOBAL */
+    .section {
+        padding: 4rem 4%;
+        min-height: 100vh;
+    }
+    .section.contact {
+        padding: 4rem 4% 0 4%;
+    }
+    .section > h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+    }
+
+    /* HOME */
+    .home {
+        padding-top: 3.5rem;
+    }
+    .enthusiast-tag {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+    .home-left h1 {
+        font-size: 1.65rem;
+        margin-bottom: 6px;
+        line-height: 1.2;
+    }
+    .home-left p {
+        font-size: 0.85rem;
+    }
+    .home-left p.quote {
+        margin: 8px 0 15px 0;
+        font-size: 0.85rem;
+    }
+    .home-btns {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+    .home-btns button {
+        margin-right: 0;
+        width: 100%;
+        max-width: 220px;
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+    .social-links-home {
+        margin-top: 15px;
+        text-align: center;
+    }
+    .social-links-home a {
+        font-size: 1.2rem;
+        margin-right: 15px;
+    }
+
+    /* SECURITY DASHBOARD */
+    .home-right {
+        margin-top: 15px;
+        max-width: 100%;
+    }
+    .security-dashboard {
+        padding: 12px;
+    }
+    .security-dashboard h2 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    .security-dashboard h3 {
+        font-size: 0.85rem;
+    }
+    .dashboard-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+    .security-score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .score-circle {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 1.1rem;
+        border-width: 3px;
+        margin-bottom: 3px;
+    }
+    .security-score p {
+        font-size: 0.7rem;
+    }
+    .threat-distribution {
+        grid-column: 1 / -1;
+    }
+    .threat-distribution h3 {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
+    .bar-chart {
+        height: 50px;
+        gap: 6px;
+        justify-content: center;
+    }
+    .bar-chart span {
+        width: 18px;
+    }
+    .activity-list {
+        margin-top: 8px;
+    }
+    .activity-list li {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    /* ABOUT */
+    #about {
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+    }
+    .about-layout {
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .about-card, .about-timeline {
+        padding: 15px;
+    }
+    .about-card h3, .about-timeline h3 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+    .about-card p {
+        font-size: 0.82rem;
+        margin-bottom: 12px;
+        line-height: 1.45;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    .stats-grid span {
+        font-size: 1.3rem;
+    }
+    .stats-grid p {
+        font-size: 0.75rem;
+    }
+    .timeline-title {
+        font-size: 0.9rem;
+    }
+    .timeline-company {
+        font-size: 0.8rem;
+    }
+
+    /* CERTIFICATIONS */
+    #certifications {
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+    }
+    .cert-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .cert-card {
+        padding: 15px 12px;
+    }
+    .cert-card h3 {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+    }
+    .cert-card p {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+    }
+    .cert-status {
+        margin-top: 6px;
+        font-size: 0.65rem;
+    }
+
+    /* BLOG */
+    #blog {
+        min-height: 40vh;
+    }
+    #blog p {
+        font-size: 0.95rem;
+    }
+
+    /* COMMUNITY */
+    #community {
+        padding-top: 4rem;
+        padding-bottom: 2rem;
+    }
+    .community-card {
+        width: 100%;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 0.8rem;
+    }
+    .community-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 0;
+    }
+    .community-item {
+        padding-right: 0;
+    }
+    .community-item i {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+    }
+    .community-item h3 {
+        font-size: 1.05rem;
+        margin-bottom: 6px;
+    }
+    .community-item p {
+        font-size: 0.82rem;
+        line-height: 1.4;
+        margin-bottom: 4px;
+    }
+    .community-item.founder {
+        border-right: none;
+        border-bottom: 1px solid rgba(136, 146, 176, 0.3);
+        padding-right: 0;
+        padding-bottom: 12px;
+    }
+    .community-item.staff {
+        padding-left: 0;
+    }
+    .member-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 6px;
+        margin-top: 10px;
+    }
+    .member-list p {
+        font-size: 0.8rem;
+        padding-left: 15px;
+    }
+    .member-list p::before {
+        font-size: 0.75rem;
+    }
+
+    /* CONTACT */
+    .section.contact {
+        padding-top: 4rem;
+    }
+    .contact-card {
+        flex-direction: column;
+        width: 100%;
+        padding: 1.2rem;
+        text-align: center;
+        margin: 1rem auto;
+    }
+    .contact-left h3, .contact-right h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.6rem;
+    }
+    .contact-left {
+        margin-bottom: 1rem;
+    }
+    .contact-left p {
+        font-size: 0.85rem;
+        margin: 6px 0;
+    }
+    .contact-left i {
+        margin-right: 6px;
+        font-size: 0.9rem;
+    }
+    .contact-right {
+        margin-bottom: 0;
+    }
+    .contact-right .quote-contact {
+        font-size: 1rem;
+    }
+    .contact-right .subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 12px;
+    }
+    .contact-right .btn-primary {
+        padding: 10px 24px;
+        font-size: 0.9rem;
+    }
+
+    /* FOOTER */
+    footer {
+        flex-direction: column;
+        gap: 6px;
+        padding: 1rem 4%;
+    }
+    .logo-footer {
+        font-size: 0.8rem;
+    }
+    footer p {
+        font-size: 0.7rem;
+    }
+    .social-links-footer a {
+        font-size: 1rem;
+        margin-left: 12px;
     }
 }
