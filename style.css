@@ -33,6 +33,7 @@ html { scrollbar-width: none; }
 /* --- SECTIONS --- */
 .section {
     padding: 8rem 10%;
+    margin: 30px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -217,7 +218,7 @@ html { scrollbar-width: none; }
     align-items: center;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 .home-left {
     flex: 1;
@@ -418,6 +419,7 @@ html { scrollbar-width: none; }
 #about {
     padding-top: 5rem;
     padding-bottom: 3rem;
+    margin: 20px;
 }
 .about-layout {
     display: flex;
@@ -507,7 +509,7 @@ html { scrollbar-width: none; }
     gap: 20px;
     width: 100%;
     max-width: 1200px;
-    margin: 30px auto 0 auto;
+    margin: 25px auto 0 auto;
 }
 .cert-card {
     background: var(--card);
@@ -556,7 +558,7 @@ html { scrollbar-width: none; }
     gap: 20px;
     width: 100%;
     max-width: 1200px;
-    margin: 30px auto 0 auto;
+    margin: 40px auto 0 auto;
 }
 .blog-card {
     background: var(--card);
