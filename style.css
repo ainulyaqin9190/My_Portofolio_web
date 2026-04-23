@@ -708,6 +708,17 @@ html { scrollbar-width: none; }
     color: var(--link-hover);
     font-size: 0.9rem;
 }
+.contact-link {
+    display: block;
+    margin: 10px 0;
+    color: var(--link-hover);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.contact-link:hover {
+    color: var(--accent);
+}
 .contact-left i {
     color: var(--accent);
     margin-right: 10px;
@@ -872,7 +883,7 @@ footer p {
         padding-left: 0;
     }
     .member-list {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
     .contact-card {
         flex-direction: column;
@@ -1174,7 +1185,7 @@ footer p {
         padding-left: 0;
     }
     .member-list {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 8px 6px;
         margin-top: 10px;
     }
