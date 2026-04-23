@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* --- COLOR VARIABLES (roomkangali.com style) --- */
+/* --- COLOR VARIABLES --- */
 :root {
     --bg: #111827;
     --card: #1f2937;
@@ -17,10 +17,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 body {
@@ -908,6 +904,7 @@ footer p {
 }
 
 /* === MOBILE (max 768px) === */
+/* Hamburger + tab-based only — no scroll between sections */
 @media (max-width: 768px) {
     body {
         overflow-y: auto;
@@ -919,8 +916,10 @@ footer p {
     .logo {
         font-size: 1rem;
     }
+
+    /* Hide desktop nav, show hamburger */
     .nav-links {
-        display: none;
+        display: none !important;
     }
     .menu-toggle {
         display: flex;
@@ -938,13 +937,13 @@ footer p {
         background: rgba(34, 211, 238, 0.15);
     }
 
-    /* Tab-based navigation: hide all sections, show only active */
+    /* Tab-based navigation: hide ALL sections, show only active */
     .section {
-        display: none;
+        display: none !important;
         min-height: auto;
     }
     .section.active-page {
-        display: flex;
+        display: flex !important;
         animation: fadeInPage 0.4s ease;
     }
     @keyframes fadeInPage {
