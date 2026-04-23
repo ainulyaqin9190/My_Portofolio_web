@@ -427,7 +427,7 @@ html { scrollbar-width: none; }
     gap: 24px;
     width: 100%;
     max-width: 1200px;
-    margin: 15px auto 0 auto;
+    margin: 10px auto 0 auto;
 }
 .about-card, .about-timeline {
     background: var(--card);
@@ -803,8 +803,8 @@ footer p {
    RESPONSIVE BREAKPOINTS
    =================================================== */
 
-/* === TABLET (max 900px) === */
-@media (max-width: 900px) {
+/* === TABLET (max 1024x) === */
+@media (max-width: 1024px) {
     .section {
         padding: 5rem 5%;
     }
@@ -897,9 +897,9 @@ footer p {
     }
 }
 
-/* === MOBILE (max 768px) === */
+/* === MOBILE (max 480px) === */
 /* Hamburger + tab-based only — no scroll between sections */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
     body {
         overflow-y: auto;
         overflow-x: hidden;
@@ -946,8 +946,8 @@ footer p {
     }
 }
 
-/* === SMALL MOBILE (max 480px) === */
-@media (max-width: 480px) {
+/* === SMALL MOBILE (max 360px) === */
+@media (max-width: 360px) {
     .section {
         padding: 4rem 4%;
     }
