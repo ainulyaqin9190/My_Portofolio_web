@@ -218,7 +218,7 @@ html { scrollbar-width: none; }
     align-items: center;
     width: 100%;
     max-width: 1200px;
-    margin: 50px auto;
+    margin: 10px auto;
 }
 .home-left {
     flex: 1;
@@ -745,8 +745,8 @@ html { scrollbar-width: none; }
 
 /* --- FOOTER --- */
 footer {
-    padding: 1.0 rem 5%;
-    margin: 5 px;
+    padding: 0 rem 2%;
+    margin: 2 px;
     text-align: center;
     background: var(--bg);
     color: var(--link-hover);
