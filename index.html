@@ -6,6 +6,9 @@
     <title>Room Kang Ainun</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="dark"> 
 
@@ -14,7 +17,7 @@
 
     <nav class="nav-links" id="navLinks">
         <a href="#home">Home</a>
-        <a href="#about">About</a>
+        <a href="#about">About Me</a>
         <a href="#certifications">Certifications</a>
         <a href="#blog">Blog</a>
         <a href="#community">Community</a>
@@ -59,21 +62,33 @@
                 <h2>Security Dashboard</h2>
                 <div class="dashboard-row">
                     <div class="security-score">
-                        <div class="score-circle">30%</div>
+                        <div class="score-ring">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                                <circle class="progress-ring__circle" cx="60" cy="60" r="52" data-percent="30" />
+                            </svg>
+                            <span class="score-value">30%</span>
+                        </div>
                         <p>Security Score</p>
                     </div>
                     <div class="security-score">
-                        <div class="score-circle">10%</div>
+                        <div class="score-ring">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="progress-ring__bg" cx="60" cy="60" r="52" />
+                                <circle class="progress-ring__circle" cx="60" cy="60" r="52" data-percent="10" />
+                            </svg>
+                            <span class="score-value">10%</span>
+                        </div>
                         <p>Total Contributions</p>
                     </div>
                     <div class="threat-distribution">
                         <h3>Distribution</h3>
                         <div class="bar-chart">
-                            <span style="height:60%; background: #9932CC;"></span> 
-                            <span style="height:45%; background: #4a90e2;"></span>
-                            <span style="height:50%; background: #64ffda;"></span>
-                            <span style="height:55%; background: #FFC300;"></span>
-                            <span style="height:40%; background: #FF5733;"></span>
+                            <span style="height:60%; background: #a78bfa;"></span>
+                            <span style="height:45%; background: #3b82f6;"></span>
+                            <span style="height:50%; background: #22d3ee;"></span>
+                            <span style="height:55%; background: #facc15;"></span>
+                            <span style="height:40%; background: #ef4444;"></span>
                         </div>
                     </div>
                 </div>
@@ -197,7 +212,7 @@ I've learned a lot from the open source community. love how collaboration and kn
 
     <footer>
         <span class="logo-footer">< RoomKangAinun/></span>
-        <p>© 2025 Room Kang Ainun All Rights Reserved</p>
+        <p>&copy; <span id="footerYear">2025</span> Room Kang Ainun All Rights Reserved</p>
         <div class="social-links-footer">
             <a href="https://www.youtube.com/@ainulyaqin675"><i class="fab fa-youtube"></i></a>
             <a href="https://instagram.com/Ainn9190_"><i class="fab fa-instagram"></i></a>

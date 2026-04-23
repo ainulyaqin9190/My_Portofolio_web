@@ -7,7 +7,7 @@ const sections = document.querySelectorAll("section");
 const navAnchors = document.querySelectorAll('.nav-links a');
 const overlayAnchors = document.querySelectorAll('.nav-overlay-menu a');
 
-// 1. Menu Toggle (Hamburger) — buka/tutup overlay
+// 1. Menu Toggle (Hamburger)
 function openMenu() {
     navOverlay.classList.add("active");
     const menuIcon = menuToggleBtn.querySelector("i");
@@ -35,7 +35,6 @@ function toggleMenu(e) {
 menuToggleBtn.addEventListener("touchstart", toggleMenu, { passive: false });
 menuToggleBtn.addEventListener("click", toggleMenu);
 
-// Klik area kosong overlay untuk menutup
 navOverlay.addEventListener("touchstart", function(e) {
     if (e.target === navOverlay) { e.preventDefault(); closeMenu(); }
 }, { passive: false });
@@ -43,7 +42,7 @@ navOverlay.addEventListener("click", function(e) {
     if (e.target === navOverlay) closeMenu();
 });
 
-// 2. Block scroll — hanya di desktop
+// 2. Block scroll — desktop only
 let isScrolling = false;
 
 function allowScrollTemporarily() {
@@ -103,4 +102,78 @@ overlayAnchors.forEach(a => {
     }
     a.addEventListener("touchstart", handleTap, { passive: false });
     a.addEventListener("click", handleTap);
+});
+
+// 7. SVG Progress Ring Animation
+function animateProgressRings() {
+    const circles = document.querySelectorAll('.progress-ring__circle');
+    circles.forEach(circle => {
+        const radius = circle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        const percent = parseInt(circle.getAttribute('data-percent')) || 0;
+        const offset = circumference - (percent / 100) * circumference;
+
+        circle.style.strokeDasharray = circumference;
+        circle.style.strokeDashoffset = circumference;
+
+        // Trigger animation after a short delay
+        setTimeout(() => {
+            circle.style.strokeDashoffset = offset;
+        }, 300);
+    });
+}
+
+// 8. Fade-in Animation with IntersectionObserver
+function initFadeInObserver() {
+    sections.forEach(section => {
+        section.classList.add('fade-in');
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+// 9. Back to Top Button
+function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    });
+
+    btn.addEventListener('click', () => {
+        allowScrollTemporarily();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// 10. Dynamic Footer Year
+function updateFooterYear() {
+    const yearEl = document.getElementById('footerYear');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
+}
+
+// Initialize everything on DOM ready
+document.addEventListener('DOMContentLoaded', () => {
+    animateProgressRings();
+    initFadeInObserver();
+    initBackToTop();
+    updateFooterYear();
 });
