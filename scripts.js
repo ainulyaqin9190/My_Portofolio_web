@@ -7,6 +7,11 @@ const sections = document.querySelectorAll("section");
 const navAnchors = document.querySelectorAll('.nav-links a');
 const overlayAnchors = document.querySelectorAll('.nav-overlay-menu a');
 
+// --- Helpers ---
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
 // 1. Menu Toggle (Hamburger)
 function openMenu() {
     navOverlay.classList.add("active");
@@ -52,28 +57,45 @@ function allowScrollTemporarily() {
 }
 
 window.addEventListener("wheel", (e) => {
+    if (isMobile()) return;
     if (!isScrolling) e.preventDefault();
 }, { passive: false });
 
 window.addEventListener("touchmove", (e) => {
-    if (window.innerWidth <= 768) return;
+    if (isMobile()) return;
     if (!isScrolling) e.preventDefault();
 }, { passive: false });
 
 window.addEventListener("keydown", (e) => {
+    if (isMobile()) return;
     const blocked = ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "];
     if (!isScrolling && blocked.includes(e.key)) e.preventDefault();
 });
 
-// 3. Scroll To Section
-function scrollToSection(id) {
-    allowScrollTemporarily();
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-    closeMenu();
+// 3. Show Page (mobile tab-based navigation)
+function showPage(id) {
+    sections.forEach(s => s.classList.remove("active-page"));
+    const target = document.getElementById(id);
+    if (target) {
+        target.classList.add("active-page");
+        window.scrollTo(0, 0);
+    }
     updateActiveLink(id);
 }
 
-// 4. Update active link (desktop nav + overlay)
+// 4. Scroll To Section (desktop) / Show Page (mobile)
+function scrollToSection(id) {
+    closeMenu();
+    if (isMobile()) {
+        showPage(id);
+    } else {
+        allowScrollTemporarily();
+        document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+        updateActiveLink(id);
+    }
+}
+
+// 5. Update active link (desktop nav + overlay)
 function updateActiveLink(currentId) {
     navAnchors.forEach(a => {
         a.classList.remove("active");
@@ -85,7 +107,7 @@ function updateActiveLink(currentId) {
     });
 }
 
-// 5. Desktop nav link clicks
+// 6. Desktop nav link clicks
 navAnchors.forEach(a => {
     a.addEventListener("click", (e) => {
         e.preventDefault();
@@ -93,7 +115,7 @@ navAnchors.forEach(a => {
     });
 });
 
-// 6. Overlay nav link clicks (mobile)
+// 7. Overlay nav link clicks (mobile)
 overlayAnchors.forEach(a => {
     function handleTap(e) {
         e.preventDefault();
@@ -104,7 +126,7 @@ overlayAnchors.forEach(a => {
     a.addEventListener("click", handleTap);
 });
 
-// 7. SVG Progress Ring Animation
+// 8. SVG Progress Ring Animation
 function animateProgressRings() {
     const circles = document.querySelectorAll('.progress-ring__circle');
     circles.forEach(circle => {
@@ -116,14 +138,13 @@ function animateProgressRings() {
         circle.style.strokeDasharray = circumference;
         circle.style.strokeDashoffset = circumference;
 
-        // Trigger animation after a short delay
         setTimeout(() => {
             circle.style.strokeDashoffset = offset;
         }, 300);
     });
 }
 
-// 8. Fade-in Animation with IntersectionObserver
+// 9. Fade-in Animation with IntersectionObserver
 function initFadeInObserver() {
     sections.forEach(section => {
         section.classList.add('fade-in');
@@ -143,7 +164,7 @@ function initFadeInObserver() {
     sections.forEach(section => observer.observe(section));
 }
 
-// 9. Back to Top Button
+// 10. Back to Top Button
 function initBackToTop() {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
@@ -157,12 +178,16 @@ function initBackToTop() {
     });
 
     btn.addEventListener('click', () => {
-        allowScrollTemporarily();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (isMobile()) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            allowScrollTemporarily();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
 }
 
-// 10. Dynamic Footer Year
+// 11. Dynamic Footer Year
 function updateFooterYear() {
     const yearEl = document.getElementById('footerYear');
     if (yearEl) {
@@ -170,10 +195,30 @@ function updateFooterYear() {
     }
 }
 
+// 12. Initialize mobile: show Home page by default
+function initMobilePages() {
+    if (isMobile()) {
+        showPage('home');
+    }
+}
+
+// Handle resize: if switching between mobile/desktop, fix section visibility
+window.addEventListener('resize', () => {
+    if (isMobile()) {
+        // Ensure one page is active on mobile
+        const hasActive = document.querySelector('.section.active-page');
+        if (!hasActive) showPage('home');
+    } else {
+        // On desktop, show all sections
+        sections.forEach(s => s.classList.remove('active-page'));
+    }
+});
+
 // Initialize everything on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     animateProgressRings();
     initFadeInObserver();
     initBackToTop();
     updateFooterYear();
+    initMobilePages();
 });
